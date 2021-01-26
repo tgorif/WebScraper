@@ -29,6 +29,7 @@ public class Scrape {
                     URL url = new URL(URLField.getText());
                     if(displayHTML.isSelected()){
                         showURlContent(url,textArea);
+                        //asdasdsa
                     }
                 }
                 catch (IOException e) {
