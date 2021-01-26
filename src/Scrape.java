@@ -22,41 +22,21 @@ public class Scrape {
         JFrame j = new JFrame();
         j.setVisible(true);
         j.add(mainPanel);
-        scrape.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                try{
-                    URL url = new URL(URLField.getText());
-                    if(displayHTML.isSelected()){
-                        showURlContent(url,textArea);
-                        //asdasdsa
+        scrape.addActionListener(actionEvent -> {
+            try{
+                URL url = new URL(URLField.getText());
+                Page p = new Page(url);
+                if(displayHTML.isSelected()) {
+                    for(String s : p.content){
+                        textArea.append(s + "\n");
                     }
                 }
-                catch (IOException e) {
-                    textArea.append("InvalidURL");
-                    e.printStackTrace();
-                }
+            }
+            catch (IOException e) {
+                textArea.append("InvalidURL");
+                e.printStackTrace();
             }
         });
-    }
-    private void showURlContent(URL url,JTextArea area) throws IOException {
-        displayURLContent(readURLContent(url),area);
-    }
-    private <T> void displayURLContent(List<T> list,JTextArea area){
-        for(T t : list){
-            area.append(t + "\n");
-        }
-    }
-    private List<String> readURLContent(URL url) throws IOException {
-        List<String> content = new ArrayList<>();
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(url.openStream()));
-        String inputLine;
-        while ((inputLine = in.readLine()) != null){
-            content.add(inputLine);
-        }
-        in.close();
-        return content;
     }
 }
 
