@@ -19,20 +19,22 @@ class Page {
     URL url;
     List<String> content;
     List<String> urls;
+    String urlHost;
     static final String urlMatcher = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
     public Page(URL u) throws IOException {
         url=u;
         content = new ArrayList<>();
         urls= new ArrayList<>();
+        printURLInfo();
         parseURL();
         findURL();
+        urlHost=url.getHost();
     }
     private void parseURL() throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
         connection.setDoOutput(true);
         connection.connect();
-        System.out.println("RESPONSECODE:   " + connection.getResponseCode());
+        System.out.println("RESPONSECODE:   " + connection.getResponseCode() + " ContentType: " + connection.getContentType() + "RequestMethod: " + connection.getRequestMethod());
         BufferedReader in = new BufferedReader(new InputStreamReader(
                 connection.getInputStream()));
         String inputLine;
@@ -42,6 +44,10 @@ class Page {
         connection.disconnect();
         Set<String> set = new HashSet<>();
         set.forEach(System.out::println);
+    }
+    private void printURLInfo() throws IOException {
+        System.out.println("Path: " +  url.getPath() + "Host: " + url.getHost() + "Protocol: " + url.getProtocol());
+        url.getContent();
     }
     private void findURL(){
         int counter=0;
@@ -68,3 +74,4 @@ class Page {
         }
     }
 }
+

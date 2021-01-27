@@ -17,6 +17,7 @@ public class Scrape {
     private JPanel mainPanel;
     private JCheckBox displayHTML;
     private JTextArea textArea;
+    private JCheckBox ListURLS;
 
     public  Scrape(){
         JFrame j = new JFrame();
@@ -28,6 +29,11 @@ public class Scrape {
                 Page p = new Page(url);
                 if(displayHTML.isSelected()) {
                     for(String s : p.content){
+                        textArea.append(s + "\n");
+                    }
+                }
+                else if(ListURLS.isSelected()){
+                    for(String s : p.urls){
                         textArea.append(s + "\n");
                     }
                 }
