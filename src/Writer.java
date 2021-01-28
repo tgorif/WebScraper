@@ -5,37 +5,31 @@ import java.util.List;
 
 public class Writer {
 
-    public void saveURLContent(Page p) throws IOException {
-        saveURLContent(p,"output.txt");
+    public Writer(List<String> list,String path,String filename,String extension){
+        write(createFile(path,filename,extension),list);
     }
-    public void saveURLContent(Page page,String filename) throws IOException {
-        File file = new File("out//output.txt");
-        if(file.createNewFile()) {
-            writeTo(file,page.content,"Content of " + page.url.toString());
+    private File createFile(String path,String filename,String extension){
+        try {
+            File file = new File(path + filename + extension);
+            if (file.createNewFile()) return file;
+            else return createFile(path,incrementFileName(filename),extension);
         }
-        else{
-            saveURLContent(page,incrementFileName(filename));
-        }
-    }
-    public void saveContainedURLS(Page p) throws IOException {
-        saveContainedURLS(p,"output.txt");
-    }
-    public void saveContainedURLS(Page page,String filename) throws IOException {
-        File file = new File(filename);
-        if(file.createNewFile()) {
-            writeTo(file,page.urls,"URLs contained in:  " + page.url.toString());
-        }
-        else{
-            saveURLContent(page,incrementFileName(filename));
+        catch (IOException e){
+            e.printStackTrace();
+            return null;
         }
     }
-    private void writeTo(File file, List<String> list,String head) throws IOException {
-        FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write(head + "\n");
-        for (String s : list) {
-            fileWriter.write(s + "\n");
+    private void write(File file,List<String> list){
+        try {
+            FileWriter w = new FileWriter(file);
+            for (String s : list) {
+                w.write(s);
+            }
+            w.close();
         }
-        fileWriter.close();
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
     private String incrementFileName(String fileName){
         if(fileName==null || fileName.length()==0) return "untitled";

@@ -29,8 +29,7 @@ class Page {
         parseURL();
         findURL();
         urlHost=url.getHost();
-        Writer w = new Writer();
-        w.saveURLContent(this);
+        new PageWriter(this,"test",true,true,true);
     }
     private void parseURL() throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
