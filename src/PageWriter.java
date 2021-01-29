@@ -1,3 +1,6 @@
+import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +25,24 @@ public class PageWriter{
          new PageWriter(p,"output",head,content,urls);
     }
 
+    public PageWriter(Page p){
+        new PageWriter(p,"output",true,true,true);
+    }
+
+    public PageWriter(Page p,List<Method> methods, String text) throws InvocationTargetException, IllegalAccessException {
+        System.out.println("PageWriter created");
+        page=p;
+        if(text==null || text.length()==0) fileName="output";
+        else fileName=text;
+        for(Method m : methods){ m.invoke(this,null);}
+        this.write();
+    }
+
     private void write(){
-        final String path = "//out";
+        System.out.println("Write has been called");
+        final String path = "out\\";
         final String extension = ".txt";
-        if(writeHead) writeHeader();
+        if(writeHead) writeTitle();
         if(writeContent) writeContent();
         if(writeURLs) writeURLs();
         new Writer(list,path,fileName,extension);
@@ -37,7 +54,7 @@ public class PageWriter{
         list.add("--------------------------------------------------------------------------");
     }
 
-    private void writeHeader(){
+    private void writeTitle(){
         list.add("PAGE::Name:" + "\n");
         list.add(page.url.toString());
         list.add("--------------------------------------------------------------------------");

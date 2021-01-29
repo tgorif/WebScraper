@@ -17,6 +17,7 @@ public class MainWindow {
 
     public MainWindow() {
         JFrame j = new JFrame();
+        j.setSize(600,400);
         j.setVisible(true);
         j.add(mainPanel);
 
@@ -38,7 +39,7 @@ public class MainWindow {
         showContentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                DisplayArea.removeAll();
+                DisplayArea.setText(null);
                 for(String s : page.content){
                     DisplayArea.append(s + "\n");
                 }
@@ -47,7 +48,7 @@ public class MainWindow {
         showURLsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                DisplayArea.removeAll();
+                DisplayArea.setText(null);
                 for(String s : page.urls){
                     DisplayArea.append(s+"\n");
                 }
@@ -56,7 +57,7 @@ public class MainWindow {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                System.out.println("Not Implemented");
+                if(page!=null)new saveDialog(page);
             }
         });
     }

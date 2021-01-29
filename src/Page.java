@@ -9,7 +9,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import java.io.IOException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 public class Page {
     URL url;
     List<String> content;
@@ -21,14 +25,13 @@ public class Page {
         content = new ArrayList<>();
         urls= new ArrayList<>();
         parseURL();
-        findURL();
+        findURL2();
         urlHost=url.getHost();
     }
     private void parseURL() throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
         connection.connect();
-        System.out.println("RESPONSECODE:   " + connection.getResponseCode() + " ContentType: " + connection.getContentType() + "RequestMethod: " + connection.getRequestMethod());
         BufferedReader in = new BufferedReader(new InputStreamReader(
                 connection.getInputStream()));
         String inputLine;
@@ -42,14 +45,12 @@ public class Page {
 
     private void findURL(){
         int counter=0;
-        System.out.println("Trying to match " + url.toString() + content.size());
         final Pattern urlPattern = Pattern.compile(
                 "(?:^|[\\W])((ht|f)tp(s?):\\/\\/|www\\.)"
                         + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
                         + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
                 Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
         for (String s : content) {
-            System.out.println(s.length()  + " " + s + "         ::::::::::::");
             Matcher matcher = urlPattern.matcher(s);
             while (matcher.find()) {
                 int matchStart = matcher.start(1);
@@ -59,9 +60,24 @@ public class Page {
             }
         }
     }
-    private void printList(List<String> list){
-        for(String s : list){
-            System.out.println(s);
+    private void findURL2(){
+        Document document;
+        try {
+            //Get Document object after parsing the html from given url.
+            document = Jsoup.connect(url.toString()).get();
+
+            //Get links from document object.
+            Elements links = document.select("a[href]");
+
+            //Iterate links and print link attributes.
+            for (Element link : links) {
+                System.out.println("Link: " + link.attr("href"));
+                System.out.println("Text: " + link.text());
+                System.out.println("");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

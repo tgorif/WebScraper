@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="saveDialog">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="984f7" class="javax.swing.JLabel" binding="includeLabel">
+        <constraints/>
+        <properties>
+          <text value="Include: "/>
+        </properties>
+      </component>
+      <component id="8c177" class="javax.swing.JCheckBox" binding="TitleCheckBox">
+        <constraints/>
+        <properties>
+          <text value="Title"/>
+        </properties>
+      </component>
+      <component id="64111" class="javax.swing.JCheckBox" binding="ContentCheckBox">
+        <constraints/>
+        <properties>
+          <text value="Content"/>
+        </properties>
+      </component>
+      <component id="878a7" class="javax.swing.JCheckBox" binding="URLCheckBox" default-binding="true">
+        <constraints/>
+        <properties>
+          <text value="URL"/>
+        </properties>
+      </component>
+      <component id="3c6f9" class="javax.swing.JLabel" binding="FileNameLabel">
+        <constraints/>
+        <properties>
+          <text value="Filename"/>
+        </properties>
+      </component>
+      <component id="16a60" class="javax.swing.JTextField" binding="filenameTextField">
+        <constraints/>
+        <properties>
+          <preferredSize width="180" height="30"/>
+          <text value="untitled"/>
+        </properties>
+      </component>
+      <component id="62f5e" class="javax.swing.JButton" binding="saveButton" default-binding="true">
+        <constraints/>
+        <properties>
+          <text value="save"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

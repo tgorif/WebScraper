@@ -9,8 +9,9 @@ public class Writer {
         write(createFile(path,filename,extension),list);
     }
     private File createFile(String path,String filename,String extension){
+        System.out.println("Writer filename" + path + filename + extension);
         try {
-            File file = new File(path + filename + extension);
+            File file = new File( path +filename + extension);
             if (file.createNewFile()) return file;
             else return createFile(path,incrementFileName(filename),extension);
         }
@@ -43,9 +44,9 @@ public class Writer {
             while(Character.isDigit(fileName.charAt(j))){
                 j--;
             }
-            endingInteger=fileName.substring(j);
-            int newEndingInteger = Integer.parseInt(endingInteger);
-            result=fileName.substring(0,j) + newEndingInteger;
+            endingInteger=fileName.substring(j+1);
+            int newEndingInteger = Integer.parseInt(endingInteger)+1;
+            result=fileName.substring(0,j+1) + newEndingInteger;
         }
         return result;
     }
