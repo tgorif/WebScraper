@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.IOException;
 import org.jsoup.Jsoup;
+import org.jsoup.helper.Validate;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -64,18 +67,39 @@ public class Page {
         Document document;
         try {
             //Get Document object after parsing the html from given url.
-            document = Jsoup.connect(url.toString()).get();
+            document = Jsoup.connect(url.toString()).userAgent("Mozilla").get();
 
             //Get links from document object.
             Elements links = document.select("a[href]");
-
+            Elements images = document.select("img[src~=(?i)\\.(png|jpe?g|gif)]");
             //Iterate links and print link attributes.
+
+
+            System.out.println("Showing links" + links.size());
             for (Element link : links) {
                 System.out.println("Link: " + link.attr("href"));
                 System.out.println("Text: " + link.text());
-                System.out.println("");
-            }
+                try {
+                    URI tmp = new URI(link.text());
+                    if(tmp.isAbsolute()) content.add(link.text());
+                    else{
+                        URI base = url.toURI();
+                        String newPath = base.getPath()+ "/" + link.text();
+                        URI absoluteURL = base.resolve(newPath);
+                        content.add(absoluteURL.toString());
+                    }
+                }
+                catch (URISyntaxException e){
 
+                }
+            }
+            System.out.println("Shwoing Images" + images.size());
+            for(Element image : images){
+                System.out.println("\nsrc : " + image.attr("src"));
+                System.out.println("height : " + image.attr("height"));
+                System.out.println("width : " + image.attr("width"));
+                System.out.println("alt : " + image.attr("alt"));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
