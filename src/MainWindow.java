@@ -26,7 +26,7 @@ public class MainWindow {
             public void actionPerformed(ActionEvent actionEvent) {
                 try {
                     URL url = new URL(URLTextField.getText());
-                    page = new Page(url);
+                    Page.setPage(url);
                 }
                 catch(MalformedURLException e){
                     e.printStackTrace();
@@ -40,7 +40,8 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 DisplayArea.setText(null);
-                for(String s : page.content){
+                DisplayArea.setText("Displaying Content");
+                for(String s : Page.getContent()){
                     DisplayArea.append(s + "\n");
                 }
             }
@@ -49,7 +50,7 @@ public class MainWindow {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 DisplayArea.setText(null);
-                for(String s : page.urls){
+                for(String s : Page.getURLS()){
                     DisplayArea.append(s+"\n");
                 }
             }
@@ -57,7 +58,7 @@ public class MainWindow {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(page!=null)new saveDialog(page);
+                if(Page.getPage()!=null)new saveDialog();
             }
         });
     }

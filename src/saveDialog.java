@@ -19,13 +19,11 @@ public class saveDialog {
     private JCheckBox TitleCheckBox;
     private JTextField filenameTextField;
     private JLabel FileNameLabel;
-    private Page page;
-    public saveDialog(Page p) {
+    public saveDialog() {
         JFrame j = new JFrame();
         j.setSize(300,200);
         j.setVisible(true);
         j.add(panel1);
-        page=p;
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -35,7 +33,7 @@ public class saveDialog {
                     if (TitleCheckBox.isSelected()) methods.add(PageWriter.class.getDeclaredMethod("writeTitle"));
                     if (ContentCheckBox.isSelected()) methods.add(PageWriter.class.getDeclaredMethod("writeContent"));
                     if (URLCheckBox.isSelected()) methods.add(PageWriter.class.getDeclaredMethod("writeURLs"));
-                    PageWriter pageWriter = new PageWriter(page,methods,filenameTextField.getText());
+                    new PageWriter(methods,filenameTextField.getText());
                     j.dispose();
                 }
                 catch(NoSuchMethodException | InvocationTargetException | IllegalAccessException e){
