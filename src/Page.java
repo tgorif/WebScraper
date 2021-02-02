@@ -19,7 +19,7 @@ public class Page {
     }
     public static void setPage(URL u){
         if(instance==null){
-            Page p = new Page(u);
+            new Page(u);
         }
     }
     public static List<String> getContent(){
