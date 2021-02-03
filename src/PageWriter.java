@@ -11,7 +11,7 @@ public class PageWriter{
         System.out.println("PageWriter created");
         if(text==null || text.length()==0) fileName="output";
         else fileName=text;
-        for(Method m : methods){ m.invoke(this,null);}
+        for(Method m : methods){ m.invoke(this);}
         this.write();
     }
 
