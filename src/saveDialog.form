@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="saveDialog">
   <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="612" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -47,9 +47,45 @@
       <component id="62f5e" class="javax.swing.JButton" binding="saveButton" default-binding="true">
         <constraints/>
         <properties>
-          <text value="save"/>
+          <text value="save as"/>
         </properties>
       </component>
+      <grid id="7104" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="b6aa7" class="javax.swing.JLabel" binding="FormatLabel">
+            <constraints/>
+            <properties>
+              <horizontalAlignment value="2"/>
+              <horizontalTextPosition value="2"/>
+              <text value="Format: "/>
+            </properties>
+          </component>
+          <component id="dbffc" class="javax.swing.JRadioButton" binding="TextRadioB">
+            <constraints/>
+            <properties>
+              <horizontalAlignment value="0"/>
+              <selected value="true"/>
+              <text value="Text"/>
+            </properties>
+          </component>
+          <component id="b455c" class="javax.swing.JRadioButton" binding="JSONRadioButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <horizontalAlignment value="0"/>
+              <text value="JSON"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="buttonGroup1">
+      <member id="b455c"/>
+      <member id="dbffc"/>
+    </group>
+  </buttonGroups>
 </form>

@@ -19,6 +19,10 @@ public class saveDialog {
     private JCheckBox TitleCheckBox;
     private JTextField filenameTextField;
     private JLabel FileNameLabel;
+    private JRadioButton TextRadioB;
+    private JRadioButton JSONRadioButton;
+    private JLabel FormatLabel;
+
     public saveDialog() {
         JFrame j = new JFrame();
         j.setSize(300,200);
@@ -33,7 +37,13 @@ public class saveDialog {
                     if (TitleCheckBox.isSelected()) methods.add(PageWriter.class.getDeclaredMethod("writeTitle"));
                     if (ContentCheckBox.isSelected()) methods.add(PageWriter.class.getDeclaredMethod("writeContent"));
                     if (URLCheckBox.isSelected()) methods.add(PageWriter.class.getDeclaredMethod("writeURLs"));
-                    new PageWriter(methods,filenameTextField.getText());
+
+                    if(TextRadioB.isSelected()) {
+                        new PageWriter(methods, filenameTextField.getText());
+                    }
+                    else if(JSONRadioButton.isSelected()){
+                        new Writer(new JSONConverter(Page.getPage()).getJSON(),filenameTextField.getText());
+                    }
                     j.dispose();
                 }
                 catch(NoSuchMethodException | InvocationTargetException | IllegalAccessException e){

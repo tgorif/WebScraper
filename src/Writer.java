@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,6 +10,16 @@ public class Writer {
     public Writer(List<String> list,String path,String filename,String extension){
         write(createFile(path,filename,extension),list);
     }
+    public Writer(JSONObject object,String path,String filename,String extension){
+        write(createFile(path,filename,extension),object);
+    }
+
+    public Writer(JSONObject json, String filename) {
+        final String path = "out\\";
+        final String extension = ".txt";
+        new Writer(json,path,filename,extension);
+    }
+
     private File createFile(String path,String filename,String extension){
         System.out.println("Writer filename" + path + filename + extension);
         try {
@@ -18,6 +30,18 @@ public class Writer {
         catch (IOException e){
             e.printStackTrace();
             return null;
+        }
+    }
+    private void write(File file,JSONObject object){
+        try {
+            FileWriter w = new FileWriter(file);
+            for(String s : object.keySet()){
+                w.write(s+object.get(s));
+            }
+            w.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
         }
     }
     private void write(File file,List<String> list){
