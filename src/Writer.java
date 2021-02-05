@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.util.List;
 
 public class Writer {
+    File f;
 
     public Writer(List<String> list,String path,String filename,String extension){
-        write(createFile(path,filename,extension),list);
+        f=createFile(path,filename,extension);
+        write(f,list);
     }
     public Writer(JSONObject object,String path,String filename,String extension){
         write(createFile(path,filename,extension),object);
